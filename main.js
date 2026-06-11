@@ -61,3 +61,40 @@ customElements.define('lotto-ticket', LottoTicket);
 document.getElementById('generator').addEventListener('click', () => {
     document.querySelector('lotto-ticket').render();
 });
+
+// Comment System Logic
+const commentForm = document.getElementById('comment-form');
+const commentInput = document.getElementById('comment-input');
+const commentList = document.getElementById('comment-list');
+
+function loadComments() {
+    const comments = JSON.parse(localStorage.getItem('lotto-comments') || '[]');
+    commentList.innerHTML = '';
+    comments.forEach(comment => addCommentToDOM(comment));
+}
+
+function addCommentToDOM(text) {
+    const div = document.createElement('div');
+    div.className = 'comment-item';
+    div.textContent = text;
+    commentList.appendChild(div);
+    commentList.scrollTop = commentList.scrollHeight;
+}
+
+commentForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = commentInput.value.trim();
+    if (text) {
+        addCommentToDOM(text);
+        saveComment(text);
+        commentInput.value = '';
+    }
+});
+
+function saveComment(text) {
+    const comments = JSON.parse(localStorage.getItem('lotto-comments') || '[]');
+    comments.push(text);
+    localStorage.setItem('lotto-comments', JSON.stringify(comments));
+}
+
+loadComments();
