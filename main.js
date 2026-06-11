@@ -35,7 +35,19 @@ class LottoTicket extends HTMLElement {
                     color: white;
                     background: #333;
                     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
                 }
+
+                @keyframes popIn {
+                    0% { transform: scale(0); opacity: 0; }
+                    100% { transform: scale(1); opacity: 1; }
+                }
+
+                ${numbers.map((_, i) => `
+                    .number:nth-child(${i + 1}) {
+                        animation-delay: ${i * 0.1}s;
+                    }
+                `).join('')}
             </style>
             <div class="ticket">
                 ${numbers.map(num => `<div class="number">${num}</div>`).join('')}
