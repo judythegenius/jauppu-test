@@ -67,6 +67,15 @@ const commentForm = document.getElementById('comment-form');
 const commentInput = document.getElementById('comment-input');
 const commentList = document.getElementById('comment-list');
 
+// EmailJS Configuration (Replace with your actual keys)
+const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+
+if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+}
+
 function loadComments() {
     const comments = JSON.parse(localStorage.getItem('lotto-comments') || '[]');
     commentList.innerHTML = '';
@@ -81,12 +90,27 @@ function addCommentToDOM(text) {
     commentList.scrollTop = commentList.scrollHeight;
 }
 
+function sendEmailNotification(text) {
+    if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+        console.log('EmailJS is not configured yet. Please provide your keys.');
+        return;
+    }
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        message: text,
+        timestamp: new Date().toLocaleString()
+    })
+    .then(() => console.log('Email sent successfully!'))
+    .catch((error) => console.error('Failed to send email:', error));
+}
+
 commentForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const text = commentInput.value.trim();
     if (text) {
         addCommentToDOM(text);
         saveComment(text);
+        sendEmailNotification(text); // Trigger email notification
         commentInput.value = '';
     }
 });
