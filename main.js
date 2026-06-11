@@ -68,9 +68,9 @@ const commentInput = document.getElementById('comment-input');
 const commentList = document.getElementById('comment-list');
 
 // EmailJS Configuration (Replace with your actual keys)
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+const EMAILJS_PUBLIC_KEY = 'oKxq8jbgKyDZMrWId';
+const EMAILJS_SERVICE_ID = 'service_29j40gk';
+const EMAILJS_TEMPLATE_ID = 'template_s92qh68';
 
 if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
     emailjs.init(EMAILJS_PUBLIC_KEY);
